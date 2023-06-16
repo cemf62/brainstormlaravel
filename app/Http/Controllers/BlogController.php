@@ -25,9 +25,35 @@ class BlogController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+    use Illuminate\Support\Facades\Storage;
+    use Illuminate\Http\Request;
+
+// ...
+
     public function store(Request $request)
     {
+        $validatedData = $request->validate([
+            'title' => 'required',
+            'content' => 'required',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:1920',
+        ]);
+
+        $blog = new Blog;
+        $blog->title = $validatedData['title'];
+        $blog->content = $validatedData['content'];
+        $blog->user_id = auth()->user()->id;
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imagePath = $image->store('public/blogs');
+            $blog->image = $imagePath;
+        }
+
+        $blog->save();
+
+        return redirect()->route('blogs.index')->with('success', 'Blog post created successfully.');
     }
+
 
     /**
      * Display the specified resource.

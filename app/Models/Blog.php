@@ -14,4 +14,21 @@ class Blog extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function getImageUrlAttribute()
+    {
+        if ($this->image) {
+            return Storage::disk('public')->url($this->image);
+        }
+
+        return null;
+    }
+
+    public function setImageAttribute($image)
+    {
+        if ($image) {
+            $imagePath = $image->store('blogs', 'public');
+            $this->attributes['image'] = $imagePath;
+        }
+    }
+
 }
