@@ -22,6 +22,10 @@ Route::get('/blogs', function () {
     return view('blogs/index');
 });
 
+Route::get('/home', function () {
+    return view('blogs/homepagina');
+});
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
