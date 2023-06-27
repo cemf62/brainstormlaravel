@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\BlogController;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -18,9 +20,12 @@ Route::get('/', function () {
     return view('auth/register');
 });
 
-Route::get('/blogs', function () {
-    return view('blogs/index');
+
+
+Route::get('/home', function () {
+    return view('blogs/postblog');
 });
+
 
 
 Route::get('/dashboard', function () {
@@ -32,5 +37,14 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+
+
+//blogs
+
+Route::get('/blogs', [BlogController::class, 'index'])->name('blogs.index');
+Route::get('/blogs/{blog}', [BlogController::class, 'show'])->name('blogs.show');
+Route::resource('blogs', BlogController::class)->middleware('auth');
+
 
 require __DIR__.'/auth.php';

@@ -1,13 +1,27 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
+@include('layouts.app')
 
-</body>
-</html>
+@section('content')
+
+
+
+        <div class="mb-4">
+            <p class="text-red-600">Logged in as: {{ auth()->user()->name }}</p>
+        </div>
+
+
+
+
+
+    @foreach($blogs as $blog)
+        <div class="mb-6">
+            <h1>{{ $blog->title }}</h1>
+            <img src="{{ asset('storage/'.$blog->image) }}" alt="Blog Image">
+            <p>{{ $blog->content }}</p>
+            <form action="{{ route('blogs.destroy', $blog->id) }}" method="POST">
+                @csrf
+                @method('DELETE')
+                <button type="submit">Delete</button>
+            </form>
+
+        </div>
+    @endforeach
