@@ -1,16 +1,4 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Journey Blogs</title>
-</head>
-<body>
-<main>
   <div class="first blog">
 
     <h1>blogpost</h1>
@@ -39,15 +27,4 @@
     </form>
 
     </div>
-    <div class="display blog">
 
-{{--        <h1>{{ $blog->title }}</h1>--}}
-{{--        <p>{{ $blog->content }}</p>--}}
-{{--        @if ($blog->image)--}}
-{{--            <img src="{{ $blog->image_url }}" alt="Blog Image">--}}
-{{--        @endif--}}
-
-    </div>
-</main>
-</body>
-</html>

@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+
+use App\Models\Blog;
+use App\Models\User;
 use Illuminate\Http\Request;
+
 
 class BlogController extends Controller
 {
@@ -11,7 +15,14 @@ class BlogController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::all();
+        $blogs = Blog::all();
+
+
+
+
+
+        return view('blogs.index', compact('blogs', 'users'));
     }
 
     /**
@@ -25,29 +36,26 @@ class BlogController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    use Illuminate\Support\Facades\Storage;
-    use Illuminate\Http\Request;
 
-// ...
 
     public function store(Request $request)
     {
         $validatedData = $request->validate([
             'title' => 'required',
             'content' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:1920',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         $blog = new Blog;
         $blog->title = $validatedData['title'];
         $blog->content = $validatedData['content'];
-        $blog->user_id = auth()->user()->id;
 
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $imagePath = $image->store('public/blogs');
-            $blog->image = $imagePath;
+            $imagePath = $image->store('public/blogs/images');
+            $blog->image = str_replace('public/', '', $imagePath);
         }
+
 
         $blog->save();
 
@@ -60,8 +68,11 @@ class BlogController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $blogs = Blog::findOrFail($id);
+
+        return view('blogs.show', compact('blogs'));
     }
+
 
     /**
      * Show the form for editing the specified resource.
