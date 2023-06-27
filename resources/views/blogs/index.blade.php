@@ -3,11 +3,12 @@
 @section('content')
 
 
-    @foreach($users as $user)
+
         <div class="mb-4">
-            <p class="text-red-600">Logged in as: {{ $user->name }}</p>
+            <p class="text-red-600">Logged in as: {{ auth()->user()->name }}</p>
         </div>
-    @endforeach
+
+
 
 
 
@@ -16,6 +17,11 @@
             <h1>{{ $blog->title }}</h1>
             <img src="{{ asset('storage/'.$blog->image) }}" alt="Blog Image">
             <p>{{ $blog->content }}</p>
+            <form action="{{ route('blogs.destroy', $blog->id) }}" method="POST">
+                @csrf
+                @method('DELETE')
+                <button type="submit">Delete</button>
+            </form>
 
         </div>
     @endforeach
