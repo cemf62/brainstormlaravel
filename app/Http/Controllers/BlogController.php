@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use Illuminate\Support\Facades\Auth;
 use App\Models\Blog;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -56,6 +57,8 @@ class BlogController extends Controller
             $blog->image = str_replace('public/', '', $imagePath);
         }
 
+
+        $blog->user_id = Auth::id();
 
         $blog->save();
 

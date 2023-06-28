@@ -22,9 +22,9 @@ Route::get('/', function () {
 
 
 
-Route::get('/home', function () {
+Route::get('/create-blog', function () {
     return view('blogs/postblog');
-});
+})->name('blogs.post');
 
 
 
